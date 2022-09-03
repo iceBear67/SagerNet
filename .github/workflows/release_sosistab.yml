@@ -32,14 +32,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch Status
-        run: git submodule status 'plugin/tuic/*' > tuic_status
+        run: git submodule status 'plugin/sosistab/*' > sosistab_status
       - name: TUIC Cache
         id: cache
         uses: actions/cache@v2
         with:
           path: |
-            plugin/tuic/src/main/jniLibs
-          key: ${{ hashFiles('.github/workflows/*', 'bin/lib/tuic/*', 'tuic_status') }}
+            plugin/sosistab/src/main/jniLibs
+          key: ${{ hashFiles('.github/workflows/*', 'bin/lib/sosistab/*', 'sosistab_status') }}
       - name: Gradle cache
         uses: actions/cache@v2
         with:
@@ -56,7 +56,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
       - name: Native Build
         if: steps.cache.outputs.cache-hit != 'true'
-        run: ./run plugin tuic
+        run: ./run plugin sosistab
   build:
     name: Gradle Build
     runs-on: ubuntu-latest
@@ -67,13 +67,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch Status
-        run: git submodule status 'plugin/tuic/*' > tuic_status
+        run: git submodule status 'plugin/sosistab/*' > sosistab_status
       - name: TUIC Cache
         uses: actions/cache@v2
         with:
           path: |
-            plugin/tuic/src/main/jniLibs
-          key: ${{ hashFiles('.github/workflows/*', 'bin/lib/tuic/*', 'tuic_status') }}
+            plugin/sosistab/src/main/jniLibs
+          key: ${{ hashFiles('.github/workflows/*', 'bin/lib/sosistab/*', 'sosistab_status') }}
       - name: Gradle cache
         uses: actions/cache@v2
         with:
@@ -82,14 +82,14 @@ jobs:
       - name: Release Build
         env:
           SKIP_BUILD: on
-          BUILD_PLUGIN: tuic
+          BUILD_PLUGIN: sosistab
         run: |
           echo "sdk.dir=${ANDROID_HOME}" > local.properties
           echo "ndk.dir=${ANDROID_HOME}/ndk/25.0.8775105" >> local.properties
           export LOCAL_PROPERTIES="${{ secrets.LOCAL_PROPERTIES }}"
           ./run init action library
-          ./gradlew :plugin:tuic:assembleOssRelease
-          APK=$(find plugin/tuic/build/outputs/apk -name '*arm64-v8a*.apk')
+          ./gradlew :plugin:sosistab:assembleOssRelease
+          APK=$(find plugin/sosistab/build/outputs/apk -name '*arm64-v8a*.apk')
           APK=$(dirname $APK)
           echo "APK=$APK" >> $GITHUB_ENV
       - uses: actions/upload-artifact@v2
@@ -175,13 +175,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Fetch Status
-        run: git submodule status 'plugin/tuic/*' > tuic_status
+        run: git submodule status 'plugin/sosistab/*' > sosistab_status
       - name: Hysteria Cache
         uses: actions/cache@v2
         with:
           path: |
-            plugin/tuic/src/main/jniLibs
-          key: ${{ hashFiles('.github/workflows/*', 'bin/lib/tuic/*', 'tuic_status') }}
+            plugin/sosistab/src/main/jniLibs
+          key: ${{ hashFiles('.github/workflows/*', 'bin/lib/sosistab/*', 'sosistab_status') }}
       - name: Gradle cache
         uses: actions/cache@v2
         with:
@@ -190,7 +190,7 @@ jobs:
       - name: Release Build
         env:
           SKIP_BUILD: on
-          BUILD_PLUGIN: tuic
+          BUILD_PLUGIN: sosistab
         run: |
           echo "sdk.dir=${ANDROID_HOME}" > local.properties
           echo "ndk.dir=${ANDROID_HOME}/ndk/25.0.8775105" >> local.properties
@@ -199,4 +199,4 @@ jobs:
           ${{ secrets.ANDROID_PUBLISHER_CREDENTIALS }}"
           EOF
           ./run init action library
-          ./gradlew :plugin:tuic:publishPlayReleaseBundle
+          ./gradlew :plugin:sosistab:publishPlayReleaseBundle

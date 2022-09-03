@@ -37,3 +37,9 @@
 [submodule "plugin/tuic/src/main/rust/tuic"]
 	path = plugin/tuic/src/main/rust/tuic
 	url = https://github.com/EAimTY/tuic
+[submodule "plugin/sosistab/src/main/rust/geph"]
+	path = plugin/sosistab/src/main/rust/geph
+	url = https://github.com/geph-official/geph4
+[submodule "plugin/sosistab/src/main/rust/geph-nat"]
+	path = plugin/sosistab/src/main/rust/geph-nat
+	url = https://github.com/geph-official/geph-nat
